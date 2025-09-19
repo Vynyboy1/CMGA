@@ -1,4 +1,4 @@
-from .funcoes import (
+from CMGA.funcoes import (
     saudacao,
     Checa_Caminho,
     get_script_path,
@@ -13,4 +13,5 @@ __all__ = [
     "get_last_day_of_month",
     "check_install_import"
 ]
+
 
