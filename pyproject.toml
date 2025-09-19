@@ -1,0 +1,12 @@
+[build-system]
+requires = ["setuptools"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "CMGA"
+version = "0.1.0"
+description = "Biblioteca interna para ETL da Energisa"
+authors = [
+    { name="Vinicius Gabriel", email="seu.email@energisa.com" }
+]
+dependencies = ["pandas"]
