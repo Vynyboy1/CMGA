@@ -2,5 +2,7 @@ from .CMGA import (
     saudacao,
     Checa_Caminho,
     get_script_path,
-    get_last_day_of_month
+    get_last_day_of_month,
+    check_install_import
 )
+
