@@ -47,8 +47,26 @@ def get_last_day_of_month(year, month):
     last_day = first_day_next_month - relativedelta(days=1)
     return last_day.date()
 
+def Criar_planilha_UN(Planilha):
+    # Cria pasta do dia
+    data_execucao = datetime.now().strftime("%Y-%m-%d")
+    caminho_base = CaminhoCENG + f'03- DADOS/Base_Falhas/1.Transformador/Info_Faltando/{Periodo_Corte[0:4]}' 
+    pasta_base = fr"{caminho_base}/{data_execucao}"
+    os.makedirs(pasta_base, exist_ok=True)
+
+    # Lista de empresas únicas
+    Lista_UN = Planilha['EMPRESA'].unique().tolist()
+
+    for empresa in Lista_UN:
+        nome_empresa = str(empresa).replace("/", "_").replace("\\", "_")
+       # caminho = os.path.join({CaminhoCENG}03- DADOS/Base_Falhas/1.Transformador/Base_Atualizada_Trafo/Substituicoes_{Periodo_Corte[0:4]}.xlsx)   
+        caminho = os.path.join(pasta_base, f"Correção {nome_empresa}.xlsx")
+        Planilha[Planilha['EMPRESA'] == empresa].to_excel(caminho, index=False)
+
+        print(f"Planilha criada: {caminho}")
 
 def saudacao(nome):
     return f'oláa {nome}'
+
 
 
