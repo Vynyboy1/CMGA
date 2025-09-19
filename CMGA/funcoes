@@ -46,3 +46,9 @@ def get_last_day_of_month(year, month):
     first_day_next_month = datetime(year, month, 1) + relativedelta(months=1)
     last_day = first_day_next_month - relativedelta(days=1)
     return last_day.date()
+
+
+def saudacao(nome):
+    return f'oláa {nome}'
+
+
