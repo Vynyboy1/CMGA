@@ -26,7 +26,9 @@ def Checa_Caminho(caminho: str) -> str:
     import getpass
     usuario = getpass.getuser()
     if not os.path.exists(caminho) and  usuario == 'vgcs4':
-        caminho_alternativo = caminho.replace("CENG/", "CENG/CENG/")  
+        caminho_alternativo = caminho.replace("CENG/", "CENG/CENG/")
+        if not os.path.exists(caminho_alternativo):
+          caminho_alternativo = caminho.replace("01 RELATORIO_GIS_MENSAL", "Suporte Sistemas Tecnicos - 01 RELATORIO_GIS_MENSAL")  
         return caminho_alternativo          
     return caminho 
 

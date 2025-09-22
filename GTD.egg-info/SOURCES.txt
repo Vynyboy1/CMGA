@@ -1,0 +1,9 @@
+README.md
+pyproject.toml
+GTD/CMGA.py
+GTD/__init__.py
+GTD.egg-info/PKG-INFO
+GTD.egg-info/SOURCES.txt
+GTD.egg-info/dependency_links.txt
+GTD.egg-info/requires.txt
+GTD.egg-info/top_level.txt

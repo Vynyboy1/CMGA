@@ -1,0 +1,6 @@
+Metadata-Version: 2.4
+Name: GTD
+Version: 0.1.0
+Summary: Biblioteca interna para ETL da Energisa
+Author-email: Vinicius Gabriel <seu.email@energisa.com>
+Requires-Dist: pandas
