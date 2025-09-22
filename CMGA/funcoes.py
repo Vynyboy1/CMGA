@@ -32,10 +32,10 @@ def Checa_Caminho(caminho: str) -> str:
     return caminho 
 
 
-def get_script_path():
+def get_script_path(caminho):
     try:
         # Se o script estiver rodando como um arquivo normal (.py)
-        return Path(__file__).resolve().parent
+        return Path(caminho).resolve().parent
     except NameError:
         # Se estiver rodando em Jupyter Notebook
         return Path(os.getcwd()).resolve()
@@ -67,6 +67,7 @@ def Criar_planilha_UN(Planilha):
 
 def saudacao(nome):
     return f'oláa {nome}'
+
 
 
 
