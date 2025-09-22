@@ -6,6 +6,7 @@ import sys
 from pathlib import Path
 from datetime import datetime
 from dateutil.relativedelta import relativedelta
+import pandas as pd
 
 def check_install_import(packages):
     """Verifica, instala (se necessário) e importa automaticamente os pacotes."""
@@ -20,7 +21,34 @@ def check_install_import(packages):
         imported_modules[package] = importlib.import_module(package)
         print(f"Pacote '{package}' importado com sucesso.")    
 
-#Definir função para obter caminho do diretório de trabalho]
+
+def parse_mixed_excel_dates(s, prefer_mac1904=False, dayfirst=True):
+    """
+    s: Series com misto de floats/ints (seriais Excel) e strings 'YYYY-MM-DD HH:MM:SS', etc.
+    prefer_mac1904: se True, usa sistema 1904 para números. Padrão: Windows (1900/1899-12-30).
+    """
+    # 1) máscara para valores estritamente numéricos (inclusive "45812.6" como string)
+    s_str = s.astype(str).str.strip()
+    mask_num = s_str.str.match(r'^[+-]?\d+(\.\d+)?$')
+    nums = pd.to_numeric(s_str.where(mask_num), errors='coerce')
+
+    # saída
+    out = pd.Series(pd.NaT, index=s.index, dtype='datetime64[ns]')
+
+    # 2) números -> datetime (Excel serial com hora pela parte decimal)
+    if prefer_mac1904:
+        out.loc[mask_num] = pd.to_datetime(nums[mask_num], unit='D', origin='1904-01-01', errors='coerce')
+    else:
+        out.loc[mask_num] = pd.to_datetime(nums[mask_num], unit='D', origin='1899-12-30', errors='coerce')
+
+    # 3) strings -> datetime (ISO, dd/mm/aaaa hh:mm:ss, etc.)
+    mask_str = ~mask_num
+    out.loc[mask_str] = pd.to_datetime(s[mask_str], errors='coerce', dayfirst=dayfirst)
+
+    # 4) relatório do que não converteu
+    invalid = s[out.isna()].astype(str)
+    return out, invalid 
+
 
 def Checa_Caminho(caminho: str) -> str:   
     import getpass
