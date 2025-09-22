@@ -50,6 +50,9 @@ def get_last_day_of_month(year, month):
 def Criar_planilha_UN(Planilha):
     # Cria pasta do dia
     data_execucao = datetime.now().strftime("%Y-%m-%d")
+    current_file_path = str(get_script_path(__file__))
+    file_path = current_file_path.replace('\\', '/')    
+    CaminhoCENG = file_path[:file_path.find('OneDrive - Energisa') + len('OneDrive - Energisa')+1]
     caminho_base = CaminhoCENG + f'03- DADOS/Base_Falhas/1.Transformador/Info_Faltando/{Periodo_Corte[0:4]}' 
     pasta_base = fr"{caminho_base}/{data_execucao}"
     os.makedirs(pasta_base, exist_ok=True)
