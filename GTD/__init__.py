@@ -1,4 +1,4 @@
-from GTD.CMGA import (
+from .CMGA import (
     saudacao,
     Checa_Caminho,
     get_script_path,
@@ -15,6 +15,7 @@ __all__ = [
     "Criar_planilha_UN",
     "check_install_import"
 ]
+
 
 
 
