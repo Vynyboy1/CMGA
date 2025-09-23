@@ -76,7 +76,15 @@ def get_last_day_of_month(year, month):
     last_day = first_day_next_month - relativedelta(days=1)
     return last_day.date()
 
-def Criar_planilha_UN(Planilha):
+def perguntar_sn(pergunta):
+    while True:
+        resposta = input(pergunta + " (S/N): ").strip().upper()
+        if resposta in ['S', 'N']:
+            return resposta
+        else:
+            print("Resposta inválida. Digite apenas 'S' ou 'N'.")
+
+def Criar_planilha_UN(Planilha,Periodo_Corte):
     # Cria pasta do dia
     data_execucao = datetime.now().strftime("%Y-%m-%d")
     current_file_path = str(get_script_path(__file__))
@@ -97,9 +105,36 @@ def Criar_planilha_UN(Planilha):
 
         print(f"Planilha criada: {caminho}")
 
+def Filtra_Vazios(Planilha):
+    Lista_coluna = [
+        'DATA OC', 'SITUAÇÃO', 'POTÊNCIA RETIRADA',
+        'LOCAL', 'NUM_OBRA', "NÚMERO OPERATIVO", "REFORMADO"
+    ]
+    Tabela_divergencia = []
+
+    for Campo_Vazio in Lista_coluna:
+        temp = Planilha[Planilha[Campo_Vazio].isna()].copy()
+        temp['MOTIVO'] = f"falta {Campo_Vazio}"
+        Tabela_divergencia.append(temp)
+
+    if Tabela_divergencia:
+        return pd.concat(Tabela_divergencia, ignore_index=True)
+    else:
+        return pd.DataFrame()
+
 def saudacao(nome):
     return f'oláa {nome}'
 
+def filtrar_ultimos_meses(df, coluna_data, data_corte,meses_substituicao):
+    df[coluna_data] = pd.to_datetime(df[coluna_data], errors='coerce')
+    inicio = pd.to_datetime(data_corte) - pd.DateOffset(months=meses_substituicao) + pd.DateOffset(day=2)
+    return df[(df[coluna_data] >= inicio) & (df[coluna_data] <= pd.to_datetime(data_corte))]
+
+#Retira ultimos 3 meses
+def retirar_ultimos_meses(df, coluna_data, data_corte,meses_substituicao):
+    df[coluna_data] = pd.to_datetime(df[coluna_data], errors='coerce')    
+    fim = (pd.to_datetime(data_corte) - pd.DateOffset(months=meses_substituicao)) + pd.offsets.MonthEnd(0)
+    return df[(df[coluna_data] <= fim)]
 
 
 

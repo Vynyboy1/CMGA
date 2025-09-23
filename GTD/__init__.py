@@ -4,7 +4,12 @@ from .CMGA import (
     get_script_path,
     get_last_day_of_month,
     check_install_import,
-    Criar_planilha_UN
+    Criar_planilha_UN,
+    parse_mixed_excel_dates,
+    Filtra_Vazios,
+    perguntar_sn,
+    filtrar_ultimos_meses,
+    retirar_ultimos_meses
 )
 
 __all__ = [
@@ -13,7 +18,12 @@ __all__ = [
     "get_script_path",
     "get_last_day_of_month",
     "Criar_planilha_UN",
-    "check_install_import"
+    "check_install_import",
+    "parse_mixed_excel_dates",
+    "Filtra_Vazios",
+    "perguntar_sn",
+    "filtrar_ultimos_meses"
+    "retirar_ultimos_meses"
 ]
 
 
